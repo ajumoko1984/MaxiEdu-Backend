@@ -1,0 +1,1 @@
+{"version":3,"file":"labFile.model.js","sourceRoot":"","sources":["../../src/models/labFile.model.ts"],"names":[],"mappings":";;AAGA,MAAM,YAAY,GAAQ;IACxB,KAAK,CAAC,MAAM,CAAC,OAAyD;QAEpE,OAAO,EAAE,GAAG,EAAE,MAAM,CAAC,IAAI,CAAC,GAAG,EAAE,CAAC,EAAE,IAAI,EAAE,OAAO,CAAC,IAAI,EAAE,QAAQ,EAAE,OAAO,CAAC,QAAQ,EAAE,CAAC;IACrF,CAAC;CACF,CAAC;AAEF,kBAAe,YAAY,CAAC"}

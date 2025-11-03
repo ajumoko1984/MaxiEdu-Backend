@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: maxiedu-backend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: SERVER_TOKEN_SECRET
+        sync: false
+      - key: APP_PORT
+        value: "3000"
+    healthCheckPath: /health
+    regions:
+      - oregon
