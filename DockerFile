@@ -1,0 +1,49 @@
+# ============================
+# Stage 1: Base
+# ============================
+FROM node:20-slim AS base
+WORKDIR /usr/src/maxiedu-backend
+COPY package*.json ./
+
+# ============================
+# Stage 2: Dependencies
+# ============================
+FROM base AS deps
+RUN npm install --legacy-peer-deps --include=optional
+
+# ============================
+# Stage 3: Build
+# ============================
+FROM deps AS build
+COPY . .
+RUN npm run build
+
+# ============================
+# Stage 4: Development (Optional)
+# ============================
+FROM deps AS development
+WORKDIR /usr/src/maxiedu-backend
+COPY . .
+EXPOSE 5000
+CMD ["npm", "run", "dev"]
+
+# ============================
+# Stage 5: Production
+# ============================
+FROM node:20-slim AS production
+WORKDIR /usr/src/maxiedu-backend
+
+# Copy node_modules from deps
+COPY --from=deps /usr/src/maxiedu-backend/node_modules ./node_modules
+
+# Copy build output from build stage
+COPY --from=build /usr/src/maxiedu-backend/build ./build
+
+# Copy package.json for reference
+COPY package*.json ./
+
+# Expose production port
+EXPOSE 5000
+
+# Start the production server
+CMD ["npm", "start"]
