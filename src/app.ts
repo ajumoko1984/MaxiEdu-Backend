@@ -16,7 +16,7 @@ export interface ExpressRequest extends Request {
 
 export const createApp = (
   bindRoutes: (app: Express) => void,
-  name: string = "Blackhole"
+  name: string = "Edu management system"
 ): Express => {
   const app = express();
   const logger = new Logger("general", Namespaces.Entry);

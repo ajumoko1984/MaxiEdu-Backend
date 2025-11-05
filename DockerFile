@@ -43,7 +43,7 @@ COPY --from=build /usr/src/maxiedu-backend/build ./build
 COPY package*.json ./
 
 # Expose production port
-EXPOSE 5000
+EXPOSE 8004
 
 # Start the production server
 CMD ["npm", "start"]

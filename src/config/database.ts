@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   port: parseInt(process.env.DB_PORT || '3306'),
   username: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME || 'maxiedu_db',
+  database: process.env.DB_NAME || 'maxiedu',
   synchronize: !isProd, // Only true in development
   logging: !isProd,
   entities: [User], // Add other entities here
