@@ -28,5 +28,5 @@ AppDataSource.initialize()
     logger.info("Data Source has been initialized!");
   })
   .catch((err) => {
-    logger.error("Error during Data Source initialization:", err);
+    logger.error("Error during Data Source initialization:", err.message);
   });
