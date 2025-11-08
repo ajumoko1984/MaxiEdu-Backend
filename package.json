@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "dev": "tsx watch src/servers/server.ts",
-    "start": "node build/servers/server.js",
-    "build": "tsc -p ."
-  },
+  "start": "node build/server.js",
+  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+  "build": "tsc"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
