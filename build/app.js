@@ -14,7 +14,7 @@ const swagger_1 = require("./config/swagger");
 const logger_1 = __importDefault(require("./utils/logger"));
 const constants_1 = require("./config/constants");
 const response_handler_1 = __importDefault(require("./utils/response-handler"));
-const createApp = (bindRoutes, name = "Blackhole") => {
+const createApp = (bindRoutes, name = "Edu management system") => {
     const app = (0, express_1.default)();
     const logger = new logger_1.default("general", constants_1.Namespaces.Entry);
     app.use((0, cors_1.default)({

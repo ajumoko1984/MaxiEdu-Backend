@@ -10,7 +10,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     port: parseInt(process.env.DB_PORT || '3306'),
     username: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME || 'maxiedu_db',
+    database: process.env.DB_NAME || 'maxiedu',
     synchronize: !isProd,
     logging: !isProd,
     entities: [user_entity_1.User],

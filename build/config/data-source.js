@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppDataSource = void 0;
 const typeorm_1 = require("typeorm");
-const user_entity_1 = require("../entities/user.entity");
 const env_config_1 = require("./env.config");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mysql",
@@ -11,10 +10,10 @@ exports.AppDataSource = new typeorm_1.DataSource({
     username: env_config_1.DB_USER,
     password: env_config_1.DB_PASSWORD,
     database: env_config_1.DB_NAME,
-    entities: [
-        user_entity_1.User
-    ],
     synchronize: true,
     logging: false,
+    entities: process.env.NODE_ENV === "production"
+        ? ["build/entities/**/*.js"]
+        : ["src/entities/**/*.ts"],
 });
 //# sourceMappingURL=data-source.js.map
