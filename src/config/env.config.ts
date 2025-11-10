@@ -15,7 +15,6 @@ export const {
   DB_USER,
   DB_NAME,
   DB_HOST,
-  DATABASE_URI,
   APP_PORT,
   NODE_ENV,
 } = process.env;

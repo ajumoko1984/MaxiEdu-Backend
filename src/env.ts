@@ -8,7 +8,6 @@ export const envSchema = z.object({
   DB_PASSWORD: z.string(),
   DB_NAME: z.string(),
   NODE_ENV: z.string(),
-  DATABASE_URI: z.string(),
   APP_PORT: z.string(),
   SERVER_TOKEN_SECRET: z.string(),
   TOKEN_EXPIRE_TIME: z.string(),

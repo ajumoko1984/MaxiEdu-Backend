@@ -4,8 +4,8 @@ import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from "./env.config";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  host: DB_HOST || "127.0.0.1",
-  port: Number(DB_PORT) || 3306,
+  host: DB_HOST,
+  port: Number(DB_PORT),
   username: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
