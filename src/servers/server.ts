@@ -16,7 +16,7 @@ export const init = () => createApp(bindUserRoutes, name);
 const app = init();
 
 // Use Render-provided PORT if available
-const port = process.env.PORT || APP_PORT || 3000;
+const port = process.env.PORT || APP_PORT;
 
 app.listen(port, () => {
   logger.info(`User Server started successfully on ${port}`);
