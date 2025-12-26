@@ -17,7 +17,7 @@ const name = "School Management System";
 const init = () => (0, app_1.createApp)(routes_1.bindUserRoutes, name);
 exports.init = init;
 const app = (0, exports.init)();
-const port = process.env.PORT || env_config_1.APP_PORT || 3000;
+const port = process.env.PORT || env_config_1.APP_PORT;
 app.listen(port, () => {
     logger.info(`User Server started successfully on ${port}`);
 });
@@ -26,6 +26,7 @@ data_source_1.AppDataSource.initialize()
     logger.info("Data Source has been initialized!");
 })
     .catch((err) => {
-    logger.error("Error during Data Source initialization:", err);
+    logger.error("Error during Data Source initialization:", err.message);
+    console.log(err);
 });
 //# sourceMappingURL=server.js.map

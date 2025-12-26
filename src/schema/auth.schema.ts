@@ -143,3 +143,81 @@ export function validateProfileUpdate(
 
   return next();
 }
+
+
+export function validateSchoolAdminSignup(
+  req: ExpressRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const schema = Joi.object()
+    .keys({
+      firstName: Joi.string().lowercase().required(),
+      lastName: Joi.string().lowercase().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().min(6).max(128).required(),
+     schoolId: Joi.string().uuid().optional(),
+    })
+    .unknown();
+
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const error = validation.error.message
+      ? validation.error.message
+      : validation.error.details[0].message;
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.BAD_REQUEST,
+      error,
+    });
+  }
+  return next();
+}
+export function validateSchoolAdminLogin(
+  req: ExpressRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const schema = Joi.object()
+  .keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  })
+    .unknown();
+
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const error = validation.error.message
+      ? validation.error.message
+      : validation.error.details[0].message;
+
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.BAD_REQUEST,
+      error,
+    });
+  }
+  return next();
+}
+
+export function validateAdminApproval(
+  req: ExpressRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const schema = Joi.object().keys({
+    email: Joi.string().email().required(),
+  });
+  
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.BAD_REQUEST,
+      error: validation.error.message,
+    });
+  }
+  next();
+}
+
+

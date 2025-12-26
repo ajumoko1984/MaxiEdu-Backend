@@ -11,7 +11,6 @@ exports.envSchema = zod_1.z.object({
     DB_PASSWORD: zod_1.z.string(),
     DB_NAME: zod_1.z.string(),
     NODE_ENV: zod_1.z.string(),
-    DATABASE_URI: zod_1.z.string(),
     APP_PORT: zod_1.z.string(),
     SERVER_TOKEN_SECRET: zod_1.z.string(),
     TOKEN_EXPIRE_TIME: zod_1.z.string(),
