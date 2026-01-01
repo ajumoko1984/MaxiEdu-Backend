@@ -6,7 +6,8 @@ import {
   IsNotEmpty,
   IsBoolean,
 } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Student } from "./student.entity";
 
 @Entity("schools")
 export class School {
@@ -87,6 +88,9 @@ export class School {
 
   @Column({ type: "int", default: 0 })
   totalClasses!: number;
+
+    @OneToMany(() => Student, (student) => student.school)
+  students!: Student[];
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt!: Date;

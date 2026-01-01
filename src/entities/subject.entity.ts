@@ -33,6 +33,11 @@ export class Subject {
   @IsString()
   code?: string;
 
+  @Column({ type: "uuid", nullable: true })
+  @IsOptional()
+  @IsUUID()
+  classId?: string;
+
   @Column({ type: "text", nullable: true })
   @IsOptional()
   @IsString()

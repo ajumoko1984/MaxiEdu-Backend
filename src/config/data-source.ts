@@ -7,6 +7,15 @@ import { Class } from "../entities/class.entity";
 import { Subject } from "../entities/subject.entity";
 import { Dorm } from "../entities/dorm.entity";
 import { Transport } from "../entities/transport.entity";
+import { Parent } from "../entities/parent.entity";
+import { Attendance } from "../entities/attendance.entity";
+import { Session } from "../entities/session.entity";
+import { Exam } from "../entities/exam.entity";
+import { Score } from "../entities/score.entity";
+import { Grade } from "../entities/grade.entity";
+import { Material } from "../entities/material.entity";
+import { Setting } from "../entities/setting.entity";
+import { Alumni } from "../entities/alumni.entity";
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from "./env.config";
 
 export const AppDataSource = new DataSource({
@@ -24,7 +33,16 @@ export const AppDataSource = new DataSource({
     Class,
     Subject,
     Dorm,
-    Transport
+    Transport,
+    Parent,
+    Attendance,
+    Session,
+    Exam,
+    Score,
+    Grade,
+    Material,
+    Setting,
+    Alumni,
   ],
   synchronize: true,
   logging: false,

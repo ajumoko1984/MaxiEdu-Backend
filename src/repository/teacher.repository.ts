@@ -46,6 +46,17 @@ class TeacherRepository {
     });
   }
 
+  // Return all teacher ids for a school (non-paginated)
+  public async findIdsBySchool(schoolId: string): Promise<string[]> {
+    const rows = await this.teacherRepository
+      .createQueryBuilder("teacher")
+      .select(["teacher.id"])
+      .where("teacher.schoolId = :schoolId", { schoolId })
+      .andWhere("teacher.isDeleted = :isDeleted", { isDeleted: false })
+      .getMany();
+    return rows.map((r: any) => r.id);
+  }
+
   public async atomicUpdate(query: Partial<Teacher>, updateData: Partial<Teacher>): Promise<Teacher | null> {
     await this.teacherRepository.update(query as any, updateData);
     return this.findOne(query);

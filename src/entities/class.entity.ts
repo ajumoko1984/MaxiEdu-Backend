@@ -27,7 +27,7 @@ export class Class {
   @Column({ type: "varchar", unique: true })
   @IsString()
   @IsNotEmpty()
-  name!: string;
+  className!: string;
 
   @Column({ type: "varchar", nullable: true })
   @IsOptional()

@@ -3,5 +3,6 @@ export enum ROLE {
   ADMIN = "admin",
   OTHER_STAFF = "other-staff",
   STUDENT = "student",
+  TEACHER = "teacher",
   HR = "hr",
 }

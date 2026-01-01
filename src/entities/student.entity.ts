@@ -7,8 +7,9 @@ import {
   IsPhoneNumber,
   IsBoolean,
 } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from "typeorm";
 import { School } from "./school.entity";
+import { Parent } from './parent.entity';
 
 @Entity("students")
 export class Student {
@@ -16,14 +17,14 @@ export class Student {
   @IsUUID()
   id!: string;
 
+  @ManyToOne(() => School, (school) => school.students, { cascade: true })
+  @JoinColumn({ name: "schoolId" })
+  school!: School;
+
   @Column({ type: "uuid" })
   @IsUUID()
   @IsNotEmpty()
   schoolId!: string;
-
-  @ManyToOne(() => School)
-  @JoinColumn({ name: "schoolId" })
-  school?: School;
 
   @Column({ type: "varchar" })
   @IsString()
@@ -32,13 +33,18 @@ export class Student {
 
   @Column({ type: "varchar" })
   @IsString()
+  @IsOptional()
+  otherNames?: string;
+
+  @Column({ type: "varchar" })
+  @IsString()
   @IsNotEmpty()
   lastName!: string;
 
-  @Column({ type: "varchar", unique: true })
+  @Column({ type: "varchar", unique: true, nullable: true })
   @IsEmail()
-  @IsNotEmpty()
-  email!: string;
+  @IsOptional()
+  email?: string;
 
   @Column({ type: "varchar", nullable: true })
   @IsOptional()
@@ -70,6 +76,103 @@ export class Student {
   @IsString()
   address?: string;
 
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  placeOfBirth?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  nationality?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  stateOfOrigin?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  lga?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  religion?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  bloodGroup?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  genotype?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  previousSchool?: string;
+
+  @Column({ type: "varchar", nullable: true, default: 'Active' })
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  @Column({ type: "text", nullable: true })
+  @IsOptional()
+  @IsString()
+  knownMedicalConditions?: string;
+
+  @Column({ type: "text", nullable: true })
+  @IsOptional()
+  @IsString()
+  allergies?: string;
+
+  @Column({ type: "text", nullable: true })
+  @IsOptional()
+  @IsString()
+  specialNeeds?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  emergencyContactName?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsPhoneNumber()
+  emergencyContactPhone?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  homeAddress?: string;
+
+  @Column({ type: "date", nullable: true })
+  @IsOptional()
+  dateOfBirth?: Date;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  gender?: string;
+
+  @Column({ type: "int", nullable: true })
+  @IsOptional()
+  age?: number;
+
+  @Column({ type: "json", nullable: true })
+  @IsOptional()
+  faceDescriptor?: number[];
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  rfid?: string;
+
   @Column({ type: "boolean", default: true })
   @IsBoolean()
   isActive!: boolean;
@@ -87,4 +190,19 @@ export class Student {
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   updatedAt!: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  setDerivedFields() {
+    if (this.dateOfBirth) {
+      const dob = new Date(this.dateOfBirth);
+      const now = new Date();
+      let age = now.getFullYear() - dob.getFullYear();
+      const m = now.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) {
+        age--;
+      }
+      this.age = age;
+    }
+  }
 }

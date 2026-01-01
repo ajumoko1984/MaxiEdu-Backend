@@ -27,7 +27,7 @@ export class Dorm {
   @Column({ type: "varchar", unique: true })
   @IsString()
   @IsNotEmpty()
-  name!: string;
+  dormName!: string;
 
   @Column({ type: "varchar", nullable: true })
   @IsOptional()

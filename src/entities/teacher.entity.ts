@@ -34,6 +34,11 @@ export class Teacher {
 
   @Column({ type: "varchar" })
   @IsString()
+  @IsOptional()
+  otherNames?: string;
+
+  @Column({ type: "varchar" })
+  @IsString()
   @IsNotEmpty()
   lastName!: string;
 
@@ -61,6 +66,63 @@ export class Teacher {
   @IsOptional()
   subject?: string[];
 
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  title?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  employmentType?: string;
+
+  @Column({ type: "date", nullable: true })
+  @IsOptional()
+  dateEmployed?: Date;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  maritalStatus?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  nationality?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  stateOfOrigin?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  lga?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  religion?: string;
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  gender?: string;
+
+  @Column({ type: "date", nullable: true })
+  @IsOptional()
+  dateOfBirth?: Date;
+
+  @Column({ type: "json", nullable: true })
+  @IsOptional()
+  faceDescriptor?: number[];
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  rfid?: string;
+
   @Column({ type: "boolean", default: true })
   @IsBoolean()
   isActive!: boolean;
@@ -78,4 +140,16 @@ export class Teacher {
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   updatedAt!: Date;
+
+  // @Column({ nullable: true })
+  // passport?: string;
+
+  // @Column({ nullable: true })
+  // bankName?: string;
+
+  // @Column({ nullable: true })
+  // bankAccountNumber?: string;
+
+  // @Column({ nullable: true })
+  // bankAccountName?: string;
 }

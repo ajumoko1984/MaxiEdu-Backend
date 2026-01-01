@@ -78,13 +78,13 @@ class SchoolRepository {
     query: Partial<School>,
     updateData: Partial<School>
   ): Promise<School | null> {
-    await this.schoolRepository.update(query, updateData);
+    await this.schoolRepository.update(query as any, updateData);
     return this.findOne(query);
   }
 
   // Soft delete a school
   public async deleteOne(query: Partial<School>): Promise<boolean> {
-    const result = await this.schoolRepository.update(query, {
+    const result = await this.schoolRepository.update(query as any, {
       isDeleted: true,
     });
     return (result.affected ?? 0) > 0;

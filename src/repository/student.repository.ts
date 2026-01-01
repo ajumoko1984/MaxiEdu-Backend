@@ -46,13 +46,24 @@ class StudentRepository {
     });
   }
 
+  // Return all student ids for a school (non-paginated)
+  public async findIdsBySchool(schoolId: string): Promise<string[]> {
+    const rows = await this.studentRepository
+      .createQueryBuilder("student")
+      .select(["student.id"])
+      .where("student.schoolId = :schoolId", { schoolId })
+      .andWhere("student.isDeleted = :isDeleted", { isDeleted: false })
+      .getMany();
+    return rows.map((r: any) => r.id);
+  }
+
   public async atomicUpdate(query: Partial<Student>, updateData: Partial<Student>): Promise<Student | null> {
-    await this.studentRepository.update(query, updateData);
+    await this.studentRepository.update(query as any, updateData);
     return this.findOne(query);
   }
 
   public async deleteOne(query: Partial<Student>): Promise<boolean> {
-    const result = await this.studentRepository.update(query, { isDeleted: true });
+    const result = await this.studentRepository.update(query as any, { isDeleted: true });
     return (result.affected ?? 0) > 0;
   }
 }
