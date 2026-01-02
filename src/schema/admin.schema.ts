@@ -3,6 +3,7 @@ import { NextFunction, Response } from "express";
 import { ExpressRequest } from "../app";
 import ResponseHandler from "../utils/response-handler";
 import { HTTP_CODES } from "../config/constants";
+import { AVAILABILITY, ROLE, WEEKDAYS } from "../enums/role.enum";
 
 export function validateAddTeacher(req: ExpressRequest, res: Response, next: NextFunction) {
   const schema = Joi.object().keys({
@@ -223,6 +224,45 @@ export function validateCreateSession(req: ExpressRequest, res: Response, next: 
   }
   return next();
 }
+export function validateCreateLibrary(req: ExpressRequest, res: Response, next: NextFunction) {
+  const schema = Joi.object().keys({
+    bookName: Joi.string().required().min(2).max(100),
+    quantity: Joi.number().required(),
+    available: Joi.string().valid(...Object.values(AVAILABILITY)).required(),
+  }).unknown();
+  
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const error = validation.error.message || validation.error.details[0].message;
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.BAD_REQUEST,
+      error,
+    });
+  }
+  return next();
+}
+
+export function validateCreateTimetable(req: ExpressRequest, res: Response, next: NextFunction) {
+  const schema = Joi.object().keys({
+    day: Joi.string().required().valid(...Object.values(WEEKDAYS)),
+    startTime: Joi.string().required().pattern(/^([01]\d|2[0-3]):([0-5]\d)$/), // HH:mm format
+    endTime: Joi.string().required().pattern(/^([01]\d|2[0-3]):([0-5]\d)$/), 
+    subject: Joi.string().required().min(2).max(100),
+    teacher: Joi.string().optional().max(100),
+  }).unknown();
+
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const error = validation.error.message || validation.error.details[0].message;
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.BAD_REQUEST,
+      error,
+    });
+  }
+  return next();
+}
 
 export function validateCreateExam(req: ExpressRequest, res: Response, next: NextFunction) {
   const schema = Joi.object().keys({
@@ -242,8 +282,6 @@ export function validateCreateExam(req: ExpressRequest, res: Response, next: Nex
   }
   return next();
 }
-
-import { ROLE } from "../enums/role.enum";
 
 export function validateMarkAttendance(req: ExpressRequest, res: Response, next: NextFunction) {
   const schema = Joi.object().keys({
@@ -350,6 +388,7 @@ export function validateAddAlumni(req: ExpressRequest, res: Response, next: Next
   }
   return next();
 }
+
 
 // Validate :schoolId route param is UUID
 export function validateSchoolId(req: ExpressRequest, res: Response, next: NextFunction) {

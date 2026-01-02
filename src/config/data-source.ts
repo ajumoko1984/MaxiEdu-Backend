@@ -17,6 +17,8 @@ import { Material } from "../entities/material.entity";
 import { Setting } from "../entities/setting.entity";
 import { Alumni } from "../entities/alumni.entity";
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from "./env.config";
+import { Library } from "../entities/library.entity";
+import { Timetable } from "../entities/timetable.entity";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -43,6 +45,8 @@ export const AppDataSource = new DataSource({
     Material,
     Setting,
     Alumni,
+    Library,
+    Timetable
   ],
   synchronize: true,
   logging: false,

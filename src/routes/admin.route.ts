@@ -22,6 +22,8 @@ import {
   validateAddAlumni,
   validateSchoolId,
   validateIdParam,
+  validateCreateLibrary,
+  validateCreateTimetable,
 } from "../schema/admin.schema";
 import parentsController from "../controllers/parents.controller";
 import classesController from "../controllers/classes.controller";
@@ -49,6 +51,8 @@ import scoreRepository from "../repository/score.repository";
 import gradeRepository from "../repository/grade.repository";
 import alumniRepository from "../repository/alumni.repository";
 import settingRepository from "../repository/setting.repository";
+import libraryController from "../controllers/library.controller";
+import timetableController from "../controllers/timetable.controller";
 
 import { ensureSchoolExists, ensureResourceBelongsToSchool } from "../middleware/ownership.middleware";
 
@@ -130,9 +134,9 @@ router.delete("/:schoolId/scores/:id", authMiddleware.auth([ROLE.ADMIN]),  ensur
 // Grades
 router.post("/:schoolId/grades", authMiddleware.auth([ROLE.ADMIN]), validateAddGrade, gradesController.addGrade);
 router.get("/:schoolId/grades", authMiddleware.auth([ROLE.ADMIN]), gradesController.listGrades);
-router.get("/:schoolId/grades/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(gradeRepository), gradesController.getGrade);
-router.put("/:schoolId/grades/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(gradeRepository), validateAddGrade, gradesController.updateGrade);
-router.delete("/:schoolId/grades/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(gradeRepository), gradesController.deleteGrade);
+router.get("/:schoolId/grades/:id", authMiddleware.auth([ROLE.ADMIN]), gradesController.getGrade);
+router.put("/:schoolId/grades/:id", authMiddleware.auth([ROLE.ADMIN]),   gradesController.updateGrade);
+router.delete("/:schoolId/grades/:id", authMiddleware.auth([ROLE.ADMIN]),  gradesController.deleteGrade);
 
 // Settings
 router.post("/:schoolId/settings", authMiddleware.auth([ROLE.ADMIN]), validateCreateSetting, settingsController.createSetting);
@@ -158,5 +162,18 @@ router.post("/:schoolId/dorms", authMiddleware.auth([ROLE.ADMIN]), validateAddDo
 // Transport Routes
 router.post("/:schoolId/transport-routes", authMiddleware.auth([ROLE.ADMIN]), validateAddTransportRoute, adminController.addTransportRoute);
 
+
+router.post("/:schoolId/library", authMiddleware.auth([ROLE.ADMIN]), validateCreateLibrary, libraryController.addLibrary);
+router.get("/:schoolId/library", authMiddleware.auth([ROLE.ADMIN]), libraryController.listLibrary);
+router.get("/:schoolId/library/:id", authMiddleware.auth([ROLE.ADMIN]), libraryController.getLibrary);
+router.put("/:schoolId/library/:id", authMiddleware.auth([ROLE.ADMIN]), libraryController.updateLibrary);
+router.delete("/:schoolId/library/:id", authMiddleware.auth([ROLE.ADMIN]), libraryController.deleteLibrary);
+
+
+router.post("/:schoolId/timetable", authMiddleware.auth([ROLE.ADMIN]), validateCreateTimetable, timetableController.addTimetable);
+router.get("/:schoolId/timetable", authMiddleware.auth([ROLE.ADMIN]), timetableController.listTimetable);
+router.get("/:schoolId/timetable/:id", authMiddleware.auth([ROLE.ADMIN]), timetableController.getTimetable);
+router.put("/:schoolId/timetable/:id", authMiddleware.auth([ROLE.ADMIN]), timetableController.updateTimetable);
+router.delete("/:schoolId/timetable/:id", authMiddleware.auth([ROLE.ADMIN]), timetableController.deleteTimetable);
 
 export default router;
