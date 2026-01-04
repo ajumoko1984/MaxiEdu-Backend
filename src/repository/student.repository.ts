@@ -10,8 +10,18 @@ class StudentRepository {
     this.studentRepository = AppDataSource.getRepository(Student);
   }
 
-  public async create(data: any): Promise<Student> {
-    return await this.studentRepository.save({
+
+
+    public async create(data: any): Promise<Student> {
+    const { profileImage } = data;
+    if (profileImage) {
+      const imageBuffer = Buffer.from(profileImage.base64, "base64");
+      data.profileImage = {
+        buffer: imageBuffer,
+        mimetype: profileImage.mimetype,
+      };
+    }
+      return await this.studentRepository.save({
       ...data,
       isActive: true,
       isDisabled: false,
@@ -39,6 +49,21 @@ class StudentRepository {
 
     return await apiQuery.getQuery().getMany();
   }
+
+public async findProfileImageById(id: string) {
+  return await this.studentRepository
+    .createQueryBuilder("student")
+    .select([
+      "student.profileImageBase64",
+      "student.profileImageMimeType",
+      "student.passportBase64",
+      "student.passportMimeType",
+    ])
+    .where("student.id = :id", { id })
+    .andWhere("student.isDeleted = false")
+    .getOne();
+}
+
 
   public async countBySchool(schoolId: string): Promise<number> {
     return await this.studentRepository.count({

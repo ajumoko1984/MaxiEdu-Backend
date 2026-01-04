@@ -52,6 +52,27 @@ export class Teacher {
   @IsPhoneNumber()
   phoneNumber?: string;
 
+@Column({ type: "longtext", nullable: true })
+@IsOptional()
+@IsString()
+profileImageBase64?: string;
+
+@Column({ type: "varchar", nullable: true })
+@IsOptional()
+@IsString()
+profileImageMimeType?: string;
+
+
+@Column({ type: "longtext", nullable: true })
+@IsOptional()
+@IsString()
+passportBase64?: string;
+
+@Column({ type: "varchar", nullable: true })
+@IsOptional()
+@IsString()
+passportMimeType?: string;
+
   @Column({ type: "varchar", nullable: true })
   @IsOptional()
   @IsString()
@@ -62,9 +83,9 @@ export class Teacher {
   @IsString()
   qualification?: string;
 
-  @Column({ type: "simple-array", nullable: true })
-  @IsOptional()
-  subject?: string[];
+ @Column({ type: "simple-array", nullable: false })
+subjects!: string[];
+
 
   @Column({ type: "varchar", nullable: true })
   @IsOptional()
@@ -123,6 +144,21 @@ export class Teacher {
   @IsString()
   rfid?: string;
 
+
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  bankName?: string;
+  
+  @Column({ type: "bigint", nullable: true })
+  @IsOptional()
+  bankAccountNumber?: number;
+  
+  @Column({ type: "varchar", nullable: true })
+  @IsOptional()
+  @IsString()
+  bankAccountName?: string;
+  
   @Column({ type: "boolean", default: true })
   @IsBoolean()
   isActive!: boolean;
@@ -141,15 +177,4 @@ export class Teacher {
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   updatedAt!: Date;
 
-  // @Column({ nullable: true })
-  // passport?: string;
-
-  // @Column({ nullable: true })
-  // bankName?: string;
-
-  // @Column({ nullable: true })
-  // bankAccountNumber?: string;
-
-  // @Column({ nullable: true })
-  // bankAccountName?: string;
 }

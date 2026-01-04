@@ -12,34 +12,20 @@ class UsersRepository {
     this.userRepository = AppDataSource.getRepository(User);
   }
 
-  // Create a new user
-  public async create({
-    firstName,
-    lastName,
-    email,
-    password,
-    accountType,
-    isDefaultPassword,
-    isActive,
-  }: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    accountType: ROLE;
-    isDefaultPassword?: boolean;
-    isActive?: boolean;
-  }) {
-    return await this.userRepository.save({
-      firstName,
-      lastName,
-      email,
-      password,
-      accountType,
-      isDefaultPassword,
-      isActive,
-    });
+
+
+    public async create(data: any): Promise<IUsers> {
+    const { profileImage } = data;
+    if (profileImage) {
+      const imageBuffer = Buffer.from(profileImage.base64, "base64");
+      data.profileImage = {
+        buffer: imageBuffer,
+        mimetype: profileImage.mimetype,
+      };
+    }
+    return await this.userRepository.save(data);
   }
+  
 
   // Find all users matching a query
   public async findAll(queryString: any): Promise<IUsers[]> {
@@ -61,6 +47,22 @@ class UsersRepository {
   public async findOne(query: any): Promise<IUsers | null> {
     return await this.userRepository.findOne({ where: query });
   }
+
+public async findProfileImageById(id: string) {
+  return await this.userRepository
+    .createQueryBuilder("user")
+    .select([
+      "user.profileImageBase64",
+      "user.profileImageMimeType",
+      "user.passportBase64",
+      "user.passportMimeType",
+    ])
+    .where("user.id = :id", { id })
+    .andWhere("user.isDeleted = false")
+    .getOne();
+}
+
+
 
   public async atomicUpdate(
     query: Partial<IUsers>,

@@ -5,25 +5,13 @@ import studentsController from "../controllers/students.controller";
 import authMiddleware from "../middleware/auth.middleware";
 import { ROLE } from "../enums/role.enum";
 import {
-  validateAddTeacher,
-  validateAddStudent,
-  validateCreateClass,
-  validateAddSubject,
-  validateAddDorm,
+  
   validateAddTransportRoute,
-  validateAddParent,
-  validateCreateSession,
-  validateCreateExam,
   validateMarkAttendance,
   validateAddMaterial,
-  validateAddScore,
-  validateAddGrade,
   validateCreateSetting,
-  validateAddAlumni,
   validateSchoolId,
-  validateIdParam,
-  validateCreateLibrary,
-  validateCreateTimetable,
+  validateIdParam
 } from "../schema/admin.schema";
 import parentsController from "../controllers/parents.controller";
 import classesController from "../controllers/classes.controller";
@@ -55,6 +43,21 @@ import libraryController from "../controllers/library.controller";
 import timetableController from "../controllers/timetable.controller";
 
 import { ensureSchoolExists, ensureResourceBelongsToSchool } from "../middleware/ownership.middleware";
+import fileUploader from "../middleware/fileUploader.middleware";
+import {getProfileImage, uploadProfileImage} from "../controllers/uploadProfileImage.controller";
+
+import { validateAddTeacher } from "../schema/admin/teacher.schema";
+import { validateAddStudent } from "../schema/admin/student.schema";
+import { validateCreateClass } from "../schema/admin/class.schema";
+import { validateAddSubject } from "../schema/admin/subject.schema";
+import { validateAddParent } from "../schema/admin/parent.schema";
+import { validateAddDorm } from "../schema/admin/dorm.schema";
+import { validateCreateExam, validateCreateSession } from "../schema/admin/session.exam.schma";
+import { validateCreateLibrary } from "../schema/admin/library.schema";
+import { validateCreateTimetable } from "../schema/admin/timetable.schema";
+import { validateAddScore } from "../schema/admin/score.schema";
+import { validateAddGrade } from "../schema/admin/grade.schema";
+import { validateAddAlumni } from "../schema/admin/alumni.schema";
 
 const router = Router();
 
@@ -63,6 +66,10 @@ router.use("/:schoolId", validateSchoolId, ensureSchoolExists);
 
 // Dashboard
 router.get("/:schoolId/dashboard", authMiddleware.auth([ROLE.ADMIN]), adminController.getDashboard);
+
+// Image upload
+router.post("/:schoolId/uploadImage/:entityType/:entityId/:imageType",fileUploader("profileImage"),uploadProfileImage);
+router.get("/:schoolId/uploadImage/:entityType/:entityId/:imageType",getProfileImage);
 
 // Teachers
 router.post("/:schoolId/teachers", authMiddleware.auth([ROLE.ADMIN]), validateAddTeacher, teacherController.addTeacher);
@@ -128,7 +135,7 @@ router.delete("/:schoolId/materials/:id", authMiddleware.auth([ROLE.ADMIN]),  en
 router.post("/:schoolId/scores", authMiddleware.auth([ROLE.ADMIN]), validateAddScore, scoresController.addScore);
 router.get("/:schoolId/scores/student/:studentId", authMiddleware.auth([ROLE.ADMIN]), validateIdParam("studentId"), ensureResourceBelongsToSchool(studentRepository, "studentId"), scoresController.listScoresByStudent);
 router.get("/:schoolId/scores/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(scoreRepository), scoresController.getScore);
-router.put("/:schoolId/scores/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(scoreRepository), validateAddScore, scoresController.updateScore);
+router.put("/:schoolId/scores/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(scoreRepository), scoresController.updateScore);
 router.delete("/:schoolId/scores/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(scoreRepository), scoresController.deleteScore);
 
 // Grades
@@ -152,9 +159,6 @@ router.get("/:schoolId/alumni/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureRe
 router.put("/:schoolId/alumni/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(alumniRepository), validateAddAlumni, alumniController.updateAlumni);
 router.delete("/:schoolId/alumni/:id", authMiddleware.auth([ROLE.ADMIN]),  ensureResourceBelongsToSchool(alumniRepository), alumniController.deleteAlumni);
 
-// Alumni
-router.post("/:schoolId/alumni", authMiddleware.auth([ROLE.ADMIN]), validateAddAlumni, alumniController.addAlumni);
-router.get("/:schoolId/alumni", authMiddleware.auth([ROLE.ADMIN]), alumniController.listAlumni);
 
 // Dorms
 router.post("/:schoolId/dorms", authMiddleware.auth([ROLE.ADMIN]), validateAddDorm, dormController.addDorm);

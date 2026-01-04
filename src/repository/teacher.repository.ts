@@ -10,14 +10,18 @@ class TeacherRepository {
     this.teacherRepository = AppDataSource.getRepository(Teacher);
   }
 
+
   public async create(data: any): Promise<Teacher> {
-    return await this.teacherRepository.save({
-      ...data,
-      isActive: true,
-      isDisabled: false,
-      isDeleted: false,
-    });
+  const { profileImage } = data;
+  if (profileImage) {
+    const imageBuffer = Buffer.from(profileImage.base64, "base64");
+    data.profileImage = {
+      buffer: imageBuffer,
+      mimetype: profileImage.mimetype,
+    };
   }
+  return await this.teacherRepository.save(data);
+}
 
   public async findOne(query: any): Promise<Teacher | null> {
     return await this.teacherRepository.findOne({
@@ -39,6 +43,22 @@ class TeacherRepository {
 
     return await apiQuery.getQuery().getMany();
   }
+
+public async findProfileImageById(id: string) {
+  return await this.teacherRepository
+    .createQueryBuilder("teacher")
+    .select([
+      "teacher.profileImageBase64",
+      "teacher.profileImageMimeType",
+      "teacher.passportBase64",
+      "teacher.passportMimeType",
+    ])
+    .where("teacher.id = :id", { id })
+    .andWhere("teacher.isDeleted = false")
+    .getOne();
+}
+
+
 
   public async countBySchool(schoolId: string): Promise<number> {
     return await this.teacherRepository.count({

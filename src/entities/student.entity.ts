@@ -56,6 +56,27 @@ export class Student {
   @IsString()
   studentId?: string;
 
+
+@Column({ type: "longtext", nullable: true })
+@IsOptional()
+@IsString()
+profileImageBase64?: string;
+
+@Column({ type: "varchar", nullable: true })
+@IsOptional()
+@IsString()
+profileImageMimeType?: string;
+
+@Column({ type: "longtext", nullable: true })
+@IsOptional()
+@IsString()
+passportBase64?: string;
+
+@Column({ type: "varchar", nullable: true })
+@IsOptional()
+@IsString()
+passportMimeType?: string;
+
   @Column({ type: "varchar", nullable: true })
   @IsOptional()
   @IsString()
