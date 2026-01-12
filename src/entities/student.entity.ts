@@ -7,7 +7,7 @@ import {
   IsPhoneNumber,
   IsBoolean,
 } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate, Index } from "typeorm";
 import { School } from "./school.entity";
 import { Parent } from './parent.entity';
 
@@ -193,11 +193,17 @@ passportMimeType?: string;
   @Column({ type: "boolean", default: false })
   @IsBoolean()
   faceEnrolled!: boolean;
+  
+  @Column({ type: "varchar", length: 32, nullable: true })
+  rfidUid?: string;
 
-  @Column({ type: "varchar", nullable: true })
-  @IsOptional()
-  @IsString()
-  rfid?: string;
+  @Column({ type: "varchar", length: 32, nullable: true })
+  rfidCode?: string;
+
+  
+  @Column({ type: "boolean", default: false })
+  @IsBoolean()
+  rfidAssigned!: boolean;
 
   @Column({ type: "boolean", default: true })
   @IsBoolean()

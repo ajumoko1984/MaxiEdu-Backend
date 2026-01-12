@@ -60,6 +60,7 @@ import { validateAddGrade } from "../schema/admin/grade.schema";
 import { validateAddAlumni } from "../schema/admin/alumni.schema";
 import faceVerificationController from "../controllers/faceVerification.controller";
 import { validateFaceEnroll, validateFaceVerify } from "../schema/admin/faceVerification.schema";
+import rfidController from "../controllers/rfid.controller";
 
 const router = Router();
 
@@ -72,6 +73,11 @@ router.get("/:schoolId/dashboard", authMiddleware.auth([ROLE.ADMIN]), adminContr
 // Image upload
 router.post("/:schoolId/uploadImage/:entityType/:entityId/:imageType",fileUploader("profileImage"),uploadProfileImage);
 router.get("/:schoolId/uploadImage/:entityType/:entityId/:imageType",getProfileImage);
+
+// RFID
+router.post("/:schoolId/rfid/assign/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.assignRfid.bind(rfidController));
+router.post("/:schoolId/rfid/verify/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.verifyRfid.bind(rfidController));
+router.post("/:schoolId/rfid/replace/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.replaceRfid.bind(rfidController));
 
 // FaceVerification
 router.post("/:schoolId/faceVerification/enroll/:id", authMiddleware.auth([ROLE.ADMIN]), validateFaceEnroll, faceVerificationController.enrollFace);

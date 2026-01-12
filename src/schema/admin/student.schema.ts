@@ -22,7 +22,11 @@ passportMimeType: Joi.string().optional(),
     dateOfBirth: Joi.date().optional(),
     gender: Joi.string().valid("Male", "Female", "Other").optional(),
     placeOfBirth: Joi.string().optional(),
-    rfid: Joi.string().optional(),
+  rfidUid: Joi.string()
+  .pattern(/^[A-Fa-f0-9]+$/)
+  .min(8)
+  .max(32),
+
     faceDescriptor: Joi.array()
   .items(Joi.number().precision(10))
   .length(128)
@@ -42,6 +46,32 @@ passportMimeType: Joi.string().optional(),
     emergencyContactPhone: Joi.string().optional().min(10).max(15),
     address: Joi.string().optional(),
     admissionDate: Joi.date().required(),
+  }).unknown();
+
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const error = validation.error.message || validation.error.details[0].message;
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.BAD_REQUEST,
+      error,
+    });
+  }
+  return next();
+}
+
+
+
+export function validateFaceVerify(req: ExpressRequest, res: Response, next: NextFunction) {
+  const schema = Joi.object().keys({
+ rfidUid: Joi.string()
+  .pattern(/^[A-Fa-f0-9]+$/)
+  .min(8)
+  .max(32)
+  .required(),
+
+
+
   }).unknown();
 
   const validation = schema.validate(req.body);
