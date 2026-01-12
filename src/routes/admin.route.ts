@@ -58,6 +58,8 @@ import { validateCreateTimetable } from "../schema/admin/timetable.schema";
 import { validateAddScore } from "../schema/admin/score.schema";
 import { validateAddGrade } from "../schema/admin/grade.schema";
 import { validateAddAlumni } from "../schema/admin/alumni.schema";
+import faceVerificationController from "../controllers/faceVerification.controller";
+import { validateFaceEnroll, validateFaceVerify } from "../schema/admin/faceVerification.schema";
 
 const router = Router();
 
@@ -70,6 +72,10 @@ router.get("/:schoolId/dashboard", authMiddleware.auth([ROLE.ADMIN]), adminContr
 // Image upload
 router.post("/:schoolId/uploadImage/:entityType/:entityId/:imageType",fileUploader("profileImage"),uploadProfileImage);
 router.get("/:schoolId/uploadImage/:entityType/:entityId/:imageType",getProfileImage);
+
+// FaceVerification
+router.post("/:schoolId/faceVerification/enroll/:id", authMiddleware.auth([ROLE.ADMIN]), validateFaceEnroll, faceVerificationController.enrollFace);
+router.post("/:schoolId/faceVerification/verify/:id", authMiddleware.auth([ROLE.ADMIN]), validateFaceVerify, faceVerificationController.verifyFace);
 
 // Teachers
 router.post("/:schoolId/teachers", authMiddleware.auth([ROLE.ADMIN]), validateAddTeacher, teacherController.addTeacher);

@@ -23,7 +23,10 @@ passportMimeType: Joi.string().optional(),
     gender: Joi.string().valid("Male", "Female", "Other").optional(),
     placeOfBirth: Joi.string().optional(),
     rfid: Joi.string().optional(),
-    faceDescriptor: Joi.array().items(Joi.number()).optional(),
+    faceDescriptor: Joi.array()
+  .items(Joi.number().precision(10))
+  .length(128)
+  .required(),
     nationality: Joi.string().optional(),
     stateOfOrigin: Joi.string().optional(),
     lga: Joi.string().optional(),

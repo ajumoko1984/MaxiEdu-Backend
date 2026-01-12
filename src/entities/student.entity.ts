@@ -189,6 +189,11 @@ passportMimeType?: string;
   @IsOptional()
   faceDescriptor?: number[];
 
+  
+  @Column({ type: "boolean", default: false })
+  @IsBoolean()
+  faceEnrolled!: boolean;
+
   @Column({ type: "varchar", nullable: true })
   @IsOptional()
   @IsString()
