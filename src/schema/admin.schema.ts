@@ -37,31 +37,6 @@ export function validateAddTransportRoute(req: ExpressRequest, res: Response, ne
 }
 
 
-
-
-
-export function validateMarkAttendance(req: ExpressRequest, res: Response, next: NextFunction) {
-  const schema = Joi.object().keys({
-    userId: Joi.string().uuid().required(),
-    userType: Joi.string().valid(...Object.values(ROLE)).required(),
-    date: Joi.date().required(),
-    status: Joi.string().valid("present", "absent", "late", "excused").required(),
-    checkInTime: Joi.string().optional(),
-    checkOutTime: Joi.string().optional(),
-    method: Joi.string().optional(),
-    markedBy: Joi.string().optional(),
-    remarks: Joi.string().optional(),
-    confidenceScore: Joi.number().optional(),
-  }).unknown();
-
-  const validation = schema.validate(req.body);
-  if (validation.error) {
-    const error = validation.error.message || validation.error.details[0].message;
-    return ResponseHandler.sendErrorResponse({ res, code: HTTP_CODES.BAD_REQUEST, error });
-  }
-  return next();
-}
-
 export function validateAddMaterial(req: ExpressRequest, res: Response, next: NextFunction) {
   const schema = Joi.object().keys({
     title: Joi.string().required().min(2).max(200),

@@ -7,7 +7,7 @@ import { ROLE } from "../enums/role.enum";
 import {
   
   validateAddTransportRoute,
-  validateMarkAttendance,
+  
   validateAddMaterial,
   validateCreateSetting,
   validateSchoolId,
@@ -61,6 +61,7 @@ import { validateAddAlumni } from "../schema/admin/alumni.schema";
 import faceVerificationController from "../controllers/faceVerification.controller";
 import { validateFaceEnroll, validateFaceVerify } from "../schema/admin/faceVerification.schema";
 import rfidController from "../controllers/rfid.controller";
+import { validateMarkAttendance } from "../schema/admin/attendance.schema";
 
 const router = Router();
 
@@ -135,6 +136,7 @@ router.delete("/:schoolId/exams/:id", authMiddleware.auth([ROLE.ADMIN]), session
 
 // Attendance
 router.post("/:schoolId/attendance", authMiddleware.auth([ROLE.ADMIN]), validateMarkAttendance, attendanceController.markAttendance);
+router.put("/:schoolId/attendance/:id", authMiddleware.auth([ROLE.ADMIN]), attendanceController.updateAttendance);
 router.get("/:schoolId/attendance", authMiddleware.auth([ROLE.ADMIN]), attendanceController.listAttendance);
 router.get("/:schoolId/attendance/:id", authMiddleware.auth([ROLE.ADMIN]), attendanceController.getAttendance);
 

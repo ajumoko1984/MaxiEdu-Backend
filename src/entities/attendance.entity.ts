@@ -1,49 +1,41 @@
-import { IsString, IsUUID, IsOptional, IsDate, IsNumber } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from "typeorm";
+import { AttendanceType } from "../enums/role.enum";
+import { IsNotEmpty, IsUUID } from "class-validator";
 
 @Entity("attendances")
 export class Attendance {
   @PrimaryGeneratedColumn("uuid")
-  @IsUUID()
-  id!: string;
+  id?: string;
+
+   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  checkInTime?: Date;
+
+  @Column({ type: "timestamp", nullable: true })
+  checkOutTime?: Date | null;
+
+  @Column({ type: "float", nullable: true })
+  faceRecognitionScore?: number | null;
+
+  @Column({
+    type: "enum",
+    enum: AttendanceType,
+  })
+  type?: AttendanceType;
 
   @Column({ type: "uuid" })
   @IsUUID()
-  userId!: string;
+  @IsNotEmpty()
+  personId?: string;
 
-  @Column({ type: "varchar" })
-  @IsString()
-  userType!: string; // student | teacher | staff
-
-  @Column({ type: "date" })
-  date!: Date;
-
-  @Column({ type: "varchar", default: "present" })
-  status!: string; // present | absent | late | excused
-
-  @Column({ type: "time", nullable: true })
-  @IsOptional()
-  checkInTime?: string;
-
-  @Column({ type: "time", nullable: true })
-  @IsOptional()
-  checkOutTime?: string;
-
-  @Column({ type: "varchar", nullable: true })
-  @IsOptional()
-  method?: string; // manual | biometric | face | card | QR
-
-  @Column({ type: "uuid", nullable: true })
-  @IsOptional()
-  markedBy?: string;
-
-  @Column({ type: "text", nullable: true })
-  @IsOptional()
-  remarks?: string;
-
-  @Column({ type: "float", nullable: true })
-  @IsOptional()
-  confidenceScore?: number;
+  @Column({ type: "uuid" })
+  @IsUUID()
+  @IsNotEmpty()
+  attenderId?: string;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt!: Date;

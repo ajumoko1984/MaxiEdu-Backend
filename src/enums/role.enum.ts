@@ -20,3 +20,8 @@ export enum WEEKDAYS {
   SATURDAY = "Saturday",
   SUNDAY = "Sunday"
 }
+
+export enum AttendanceType {
+  STUDENT = "STU",
+  TEACHER = "TCH",
+}
