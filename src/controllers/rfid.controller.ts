@@ -109,6 +109,58 @@ async assignRfid(req: ExpressRequest, res: Response) {
     }
   }
 
+  // Get RFID details (Student or Teacher)
+async getRfid(req: ExpressRequest, res: Response) {
+  try {
+   
+
+    const { role, id } = req.params;
+
+    // TEMP: same repository, later you can split
+    const person = await studentRepository.findOne({ id });
+
+    if (!person) {
+      return ResponseHandler.sendErrorResponse({
+        res,
+        code: HTTP_CODES.NOT_FOUND,
+        error: `${role === "STU" ? "Student" : "Teacher"} not found`,
+      });
+    }
+
+    if (!person.rfidAssigned) {
+      return ResponseHandler.sendSuccessResponse({
+        res,
+        code: HTTP_CODES.OK,
+        message: "RFID not assigned",
+        data: {
+          role,
+          rfidAssigned: false,
+        },
+      });
+    }
+
+    return ResponseHandler.sendSuccessResponse({
+      res,
+      code: HTTP_CODES.OK,
+      message: "RFID fetched successfully",
+      data: {
+        role,
+        rfidAssigned: true,
+        rfidUid: person.rfidUid,
+        rfidCode: person.rfidCode,
+      },
+    });
+  } catch (err: any) {
+    logger.error(`Error in getRfid: ${err.message}`);
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.INTERNAL_SERVER_ERROR,
+      error: "Internal server error",
+    });
+  }
+}
+
+
 // Replace RFID for a student
 replaceRfid = async (req: ExpressRequest, res: Response) => {
   try {

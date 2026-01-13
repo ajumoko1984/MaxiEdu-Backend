@@ -78,6 +78,7 @@ router.get("/:schoolId/uploadImage/:entityType/:entityId/:imageType",getProfileI
 router.post("/:schoolId/rfid/assign/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.assignRfid.bind(rfidController));
 router.post("/:schoolId/rfid/verify/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.verifyRfid.bind(rfidController));
 router.post("/:schoolId/rfid/replace/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.replaceRfid.bind(rfidController));
+router.get("/:schoolId/rfid/:id", authMiddleware.auth([ROLE.ADMIN]), rfidController.getRfid.bind(rfidController));
 
 // FaceVerification
 router.post("/:schoolId/faceVerification/enroll/:id", authMiddleware.auth([ROLE.ADMIN]), validateFaceEnroll, faceVerificationController.enrollFace);
