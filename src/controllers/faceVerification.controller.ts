@@ -143,6 +143,41 @@ class FaceVerificationController {
       }
     }
     
+    // Get face enrollment status
+async getFaceStatus(req: ExpressRequest, res: Response) {
+  try {
+    const id = req.params.id;
+
+    const student = await studentRepository.findOne({ id });
+    if (!student) {
+      return ResponseHandler.sendErrorResponse({
+        res,
+        code: HTTP_CODES.NOT_FOUND,
+        error: "Student not found",
+      });
+    }
+
+    return ResponseHandler.sendSuccessResponse({
+      res,
+      code: HTTP_CODES.OK,
+      message: "Face status retrieved successfully",
+      data: {
+        studentId: student.id,
+        faceEnrolled: student.faceEnrolled,
+        canEnroll: !student.faceEnrolled,
+        canVerify: student.faceEnrolled && !!student.faceDescriptor,
+      },
+    });
+  } catch (error: any) {
+    logger.error(`Error in getFaceStatus: ${error.message}`);
+    return ResponseHandler.sendErrorResponse({
+      res,
+      code: HTTP_CODES.INTERNAL_SERVER_ERROR,
+      error: "Internal server error",
+    });
+  }
+}
+
     
     }
 

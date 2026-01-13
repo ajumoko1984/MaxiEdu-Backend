@@ -82,6 +82,7 @@ router.post("/:schoolId/rfid/replace/:id", authMiddleware.auth([ROLE.ADMIN]), rf
 // FaceVerification
 router.post("/:schoolId/faceVerification/enroll/:id", authMiddleware.auth([ROLE.ADMIN]), validateFaceEnroll, faceVerificationController.enrollFace);
 router.post("/:schoolId/faceVerification/verify/:id", authMiddleware.auth([ROLE.ADMIN]), validateFaceVerify, faceVerificationController.verifyFace);
+router.get("/:schoolId/faceVerification/status/:id", authMiddleware.auth([ROLE.ADMIN]), faceVerificationController.getFaceStatus);
 
 // Teachers
 router.post("/:schoolId/teachers", authMiddleware.auth([ROLE.ADMIN]), validateAddTeacher, teacherController.addTeacher);
