@@ -99,6 +99,45 @@ Before running this project, ensure you have the following prerequisites:
 
 ## API Documentation
 
+The API documentation is available via Swagger UI at `http://localhost:3000/api-docs` when running locally.
+
+### Testing the API
+
+1. **Start the server:**
+   ```bash
+   npm run dev
+   ```
+
+2. **Open Swagger UI:**
+   - Navigate to `http://localhost:3000/api-docs`
+   - All endpoints are organized by modules
+   - Click "Try it out" to test endpoints
+   - Use "Authorize" button to add JWT tokens for protected routes
+
+### Key Endpoints to Test
+
+#### Authentication
+- `POST /api/v1/auth/register-super-admin` - Create super admin
+- `POST /api/v1/auth/login` - User login
+- `POST /api/v1/auth/loginSchoolAdmin` - School admin login
+
+#### School Management (Super Admin)
+- `GET /api/v1/super-admin/schools` - List all schools
+- `POST /api/v1/super-admin/schools` - Create new school
+
+#### School Operations (Admin)
+- `GET /api/v1/admin/schools/{schoolId}/dashboard` - School dashboard
+- `POST /api/v1/admin/schools/{schoolId}/teachers` - Add teacher
+- `POST /api/v1/admin/schools/{schoolId}/students` - Add student
+- `POST /api/v1/admin/schools/{schoolId}/classes` - Create class
+
+## NPM Commands
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Compile TypeScript to JavaScript
+- `npm start` - Start production server
+- `npm run build && npm start` - Build and start production server
+
 ### Authentication Endpoints
 
 ```
