@@ -1,4 +1,5 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
 
 const options = {
   definition: {
@@ -11,7 +12,7 @@ const options = {
     servers: [
       {
         url: process.env.NODE_ENV === 'production' 
-          ? 'https://your-render-url.onrender.com'  // Update this with your Render URL
+          ? 'https://maxiedu-latest.onrender.com'  // Your Render URL
           : `http://localhost:${process.env.APP_PORT || 3000}`,
         description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
@@ -26,9 +27,7 @@ const options = {
       },
     },
   },
-  apis: process.env.NODE_ENV === 'production' 
-    ? ['./build/routes/*.js']
-    : ['./src/routes/*.ts', './build/routes/*.js'],
+  apis: [path.join(__dirname, '../routes/*.ts')], // Use absolute path to source files
 };
 
 export const specs = swaggerJsdoc(options);

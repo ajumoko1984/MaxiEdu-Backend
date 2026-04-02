@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/servers/server.ts",
     "start": "node build/servers/server.js",
-    "build": "tsc -p ."
+    "build": "tsc -p . && cp -r src build/",
+    "postbuild": "cp -r src build/"
   },
   "keywords": [],
   "author": "",
