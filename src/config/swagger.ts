@@ -27,7 +27,9 @@ const options = {
       },
     },
   },
-  apis: [path.join(__dirname, '../routes/*.ts')], // Use absolute path to source files
+  apis: process.env.NODE_ENV === 'production' 
+    ? [path.join(process.cwd(), 'build/routes/*.ts')]
+    : [path.join(process.cwd(), 'src/routes/*.ts')],
 };
 
 export const specs = swaggerJsdoc(options);
