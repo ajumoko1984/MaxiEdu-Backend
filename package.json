@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/servers/server.ts",
     "start": "node build/servers/server.js",
-    "build": "tsc -p ."
+    "build": "tsc -p . && node -e \"const fs = require('fs'); const path = require('path'); const srcRoutes = path.join(__dirname, 'src/routes'); const buildRoutes = path.join(__dirname, 'build/routes'); if (!fs.existsSync(buildRoutes)) fs.mkdirSync(buildRoutes, {recursive: true}); fs.readdirSync(srcRoutes).filter(f => f.endsWith('.ts')).forEach(f => fs.copyFileSync(path.join(srcRoutes, f), path.join(buildRoutes, f)));\"",
+    "render-build": "npm run build"
   },
   "keywords": [],
   "author": "",
