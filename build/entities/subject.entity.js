@@ -45,6 +45,12 @@ __decorate([
     __metadata("design:type", String)
 ], Subject.prototype, "code", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "uuid", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], Subject.prototype, "classId", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: "text", nullable: true }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),

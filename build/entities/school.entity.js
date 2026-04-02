@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.School = void 0;
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
+const student_entity_1 = require("./student.entity");
 let School = class School {
 };
 exports.School = School;
@@ -111,6 +112,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: "int", default: 0 }),
     __metadata("design:type", Number)
 ], School.prototype, "totalClasses", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => student_entity_1.Student, (student) => student.school),
+    __metadata("design:type", Array)
+], School.prototype, "students", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" }),
     __metadata("design:type", Date)

@@ -31,7 +31,9 @@ const options = {
             },
         },
     },
-    apis: ['./src/routes/*.ts'],
+    apis: process.env.NODE_ENV === 'production'
+        ? ['./build/routes/*.js']
+        : ['./src/routes/*.ts', './build/routes/*.js'],
 };
 exports.specs = (0, swagger_jsdoc_1.default)(options);
 //# sourceMappingURL=swagger.js.map

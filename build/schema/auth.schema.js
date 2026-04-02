@@ -8,6 +8,9 @@ exports.validateUserLogin = validateUserLogin;
 exports.validateForgotPassword = validateForgotPassword;
 exports.validateResetPasswordToken = validateResetPasswordToken;
 exports.validateProfileUpdate = validateProfileUpdate;
+exports.validateSchoolAdminSignup = validateSchoolAdminSignup;
+exports.validateSchoolAdminLogin = validateSchoolAdminLogin;
+exports.validateAdminApproval = validateAdminApproval;
 const joi_1 = __importDefault(require("joi"));
 const response_handler_1 = __importDefault(require("../utils/response-handler"));
 const constants_1 = require("../config/constants");
@@ -107,5 +110,62 @@ function validateProfileUpdate(req, res, next) {
         });
     }
     return next();
+}
+function validateSchoolAdminSignup(req, res, next) {
+    const schema = joi_1.default.object()
+        .keys({
+        firstName: joi_1.default.string().lowercase().required(),
+        lastName: joi_1.default.string().lowercase().required(),
+        email: joi_1.default.string().email().required(),
+        password: joi_1.default.string().min(6).max(128).required(),
+        schoolId: joi_1.default.string().uuid().optional(),
+    })
+        .unknown();
+    const validation = schema.validate(req.body);
+    if (validation.error) {
+        const error = validation.error.message
+            ? validation.error.message
+            : validation.error.details[0].message;
+        return response_handler_1.default.sendErrorResponse({
+            res,
+            code: constants_1.HTTP_CODES.BAD_REQUEST,
+            error,
+        });
+    }
+    return next();
+}
+function validateSchoolAdminLogin(req, res, next) {
+    const schema = joi_1.default.object()
+        .keys({
+        email: joi_1.default.string().email().required(),
+        password: joi_1.default.string().required(),
+    })
+        .unknown();
+    const validation = schema.validate(req.body);
+    if (validation.error) {
+        const error = validation.error.message
+            ? validation.error.message
+            : validation.error.details[0].message;
+        return response_handler_1.default.sendErrorResponse({
+            res,
+            code: constants_1.HTTP_CODES.BAD_REQUEST,
+            error,
+        });
+    }
+    return next();
+}
+function validateAdminApproval(req, res, next) {
+    const schema = joi_1.default.object().keys({
+        email: joi_1.default.string().email().required(),
+    });
+    const validation = schema.validate(req.body);
+    if (validation.error) {
+        return response_handler_1.default.sendErrorResponse({
+            res,
+            code: constants_1.HTTP_CODES.BAD_REQUEST,
+            error: validation.error.message,
+        });
+    }
+    next();
 }
 //# sourceMappingURL=auth.schema.js.map

@@ -26,7 +26,9 @@ const options = {
       },
     },
   },
-  apis: ['./src/routes/*.ts'], // Path to the API routes
+  apis: process.env.NODE_ENV === 'production' 
+    ? ['./build/routes/*.js']
+    : ['./src/routes/*.ts', './build/routes/*.js'],
 };
 
 export const specs = swaggerJsdoc(options);

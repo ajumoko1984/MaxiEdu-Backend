@@ -11,12 +11,15 @@ class TeacherRepository {
         this.teacherRepository = data_source_1.AppDataSource.getRepository(teacher_entity_1.Teacher);
     }
     async create(data) {
-        return await this.teacherRepository.save({
-            ...data,
-            isActive: true,
-            isDisabled: false,
-            isDeleted: false,
-        });
+        const { profileImage } = data;
+        if (profileImage) {
+            const imageBuffer = Buffer.from(profileImage.base64, "base64");
+            data.profileImage = {
+                buffer: imageBuffer,
+                mimetype: profileImage.mimetype,
+            };
+        }
+        return await this.teacherRepository.save(data);
     }
     async findOne(query) {
         return await this.teacherRepository.findOne({
@@ -35,10 +38,32 @@ class TeacherRepository {
             .paginate();
         return await apiQuery.getQuery().getMany();
     }
+    async findProfileImageById(id) {
+        return await this.teacherRepository
+            .createQueryBuilder("teacher")
+            .select([
+            "teacher.profileImageBase64",
+            "teacher.profileImageMimeType",
+            "teacher.passportBase64",
+            "teacher.passportMimeType",
+        ])
+            .where("teacher.id = :id", { id })
+            .andWhere("teacher.isDeleted = false")
+            .getOne();
+    }
     async countBySchool(schoolId) {
         return await this.teacherRepository.count({
             where: { schoolId, isDeleted: false, isActive: true },
         });
+    }
+    async findIdsBySchool(schoolId) {
+        const rows = await this.teacherRepository
+            .createQueryBuilder("teacher")
+            .select(["teacher.id"])
+            .where("teacher.schoolId = :schoolId", { schoolId })
+            .andWhere("teacher.isDeleted = :isDeleted", { isDeleted: false })
+            .getMany();
+        return rows.map((r) => r.id);
     }
     async atomicUpdate(query, updateData) {
         await this.teacherRepository.update(query, updateData);

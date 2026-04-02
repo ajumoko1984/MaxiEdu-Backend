@@ -12,7 +12,7 @@ const bindUserRoutes = (app) => {
     console.log(" Auth routes bound at /api/v1/auth");
     app.use("/api/v1/super-admin", super_admin_route_1.default);
     console.log(" Super Admin routes bound at /api/v1/super-admin");
-    app.use("/api/v1/admin", admin_route_1.default);
+    app.use("/api/v1/admin/schools", admin_route_1.default);
     console.log(" Admin routes bound at /api/v1/admin");
 };
 exports.bindUserRoutes = bindUserRoutes;

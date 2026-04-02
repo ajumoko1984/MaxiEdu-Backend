@@ -10,7 +10,18 @@ const class_entity_1 = require("../entities/class.entity");
 const subject_entity_1 = require("../entities/subject.entity");
 const dorm_entity_1 = require("../entities/dorm.entity");
 const transport_entity_1 = require("../entities/transport.entity");
+const parent_entity_1 = require("../entities/parent.entity");
+const attendance_entity_1 = require("../entities/attendance.entity");
+const session_entity_1 = require("../entities/session.entity");
+const exam_entity_1 = require("../entities/exam.entity");
+const score_entity_1 = require("../entities/score.entity");
+const grade_entity_1 = require("../entities/grade.entity");
+const material_entity_1 = require("../entities/material.entity");
+const setting_entity_1 = require("../entities/setting.entity");
+const alumni_entity_1 = require("../entities/alumni.entity");
 const env_config_1 = require("./env.config");
+const library_entity_1 = require("../entities/library.entity");
+const timetable_entity_1 = require("../entities/timetable.entity");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mysql",
     host: env_config_1.DB_HOST,
@@ -26,7 +37,18 @@ exports.AppDataSource = new typeorm_1.DataSource({
         class_entity_1.Class,
         subject_entity_1.Subject,
         dorm_entity_1.Dorm,
-        transport_entity_1.Transport
+        transport_entity_1.Transport,
+        parent_entity_1.Parent,
+        attendance_entity_1.Attendance,
+        session_entity_1.Session,
+        exam_entity_1.Exam,
+        score_entity_1.Score,
+        grade_entity_1.Grade,
+        material_entity_1.Material,
+        setting_entity_1.Setting,
+        alumni_entity_1.Alumni,
+        library_entity_1.Library,
+        timetable_entity_1.Timetable
     ],
     synchronize: true,
     logging: false,

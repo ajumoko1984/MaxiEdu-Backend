@@ -41,6 +41,12 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: "varchar" }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "otherNames", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar" }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], Teacher.prototype, "lastName", void 0);
@@ -57,6 +63,30 @@ __decorate([
     __metadata("design:type", String)
 ], Teacher.prototype, "phoneNumber", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "longtext", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "profileImageBase64", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "profileImageMimeType", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "longtext", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "passportBase64", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "passportMimeType", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
@@ -69,10 +99,95 @@ __decorate([
     __metadata("design:type", String)
 ], Teacher.prototype, "qualification", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "simple-array", nullable: true }),
-    (0, class_validator_1.IsOptional)(),
+    (0, typeorm_1.Column)({ type: "simple-array", nullable: false }),
     __metadata("design:type", Array)
 ], Teacher.prototype, "subjects", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "title", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "employmentType", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "date", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], Teacher.prototype, "dateEmployed", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "maritalStatus", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "nationality", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "stateOfOrigin", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "lga", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "religion", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "gender", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "date", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], Teacher.prototype, "dateOfBirth", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "json", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], Teacher.prototype, "faceDescriptor", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "rfid", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "bankName", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "bigint", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], Teacher.prototype, "bankAccountNumber", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "bankAccountName", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "boolean", default: true }),
     (0, class_validator_1.IsBoolean)(),

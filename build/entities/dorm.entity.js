@@ -37,7 +37,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], Dorm.prototype, "name", void 0);
+], Dorm.prototype, "dormName", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     (0, class_validator_1.IsOptional)(),

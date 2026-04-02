@@ -61,6 +61,30 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "accountType", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "longtext", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], User.prototype, "profileImageBase64", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], User.prototype, "profileImageMimeType", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "longtext", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], User.prototype, "passportBase64", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], User.prototype, "passportMimeType", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: "boolean", default: true }),
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)

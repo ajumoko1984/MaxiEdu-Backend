@@ -11,16 +11,16 @@ class UsersRepository {
     constructor() {
         this.userRepository = data_source_1.AppDataSource.getRepository(user_entity_1.User);
     }
-    async create({ firstName, lastName, email, password, accountType, isDefaultPassword, isActive, }) {
-        return await this.userRepository.save({
-            firstName,
-            lastName,
-            email,
-            password,
-            accountType,
-            isDefaultPassword,
-            isActive,
-        });
+    async create(data) {
+        const { profileImage } = data;
+        if (profileImage) {
+            const imageBuffer = Buffer.from(profileImage.base64, "base64");
+            data.profileImage = {
+                buffer: imageBuffer,
+                mimetype: profileImage.mimetype,
+            };
+        }
+        return await this.userRepository.save(data);
     }
     async findAll(queryString) {
         const query = this.userRepository
@@ -36,6 +36,19 @@ class UsersRepository {
     }
     async findOne(query) {
         return await this.userRepository.findOne({ where: query });
+    }
+    async findProfileImageById(id) {
+        return await this.userRepository
+            .createQueryBuilder("user")
+            .select([
+            "user.profileImageBase64",
+            "user.profileImageMimeType",
+            "user.passportBase64",
+            "user.passportMimeType",
+        ])
+            .where("user.id = :id", { id })
+            .andWhere("user.isDeleted = false")
+            .getOne();
     }
     async atomicUpdate(query, updateData) {
         await this.userRepository.update(query, updateData);

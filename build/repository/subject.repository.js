@@ -34,6 +34,9 @@ class SubjectRepository {
             .paginate();
         return await apiQuery.getQuery().getMany();
     }
+    async findByClass(query) {
+        return this.subjectRepository.find({ where: { ...query, isDeleted: false } });
+    }
     async countBySchool(schoolId) {
         return await this.subjectRepository.count({
             where: { schoolId, isDeleted: false, isActive: true },

@@ -11,6 +11,14 @@ class StudentRepository {
         this.studentRepository = data_source_1.AppDataSource.getRepository(student_entity_1.Student);
     }
     async create(data) {
+        const { profileImage } = data;
+        if (profileImage) {
+            const imageBuffer = Buffer.from(profileImage.base64, "base64");
+            data.profileImage = {
+                buffer: imageBuffer,
+                mimetype: profileImage.mimetype,
+            };
+        }
         return await this.studentRepository.save({
             ...data,
             isActive: true,
@@ -35,10 +43,32 @@ class StudentRepository {
             .paginate();
         return await apiQuery.getQuery().getMany();
     }
+    async findProfileImageById(id) {
+        return await this.studentRepository
+            .createQueryBuilder("student")
+            .select([
+            "student.profileImageBase64",
+            "student.profileImageMimeType",
+            "student.passportBase64",
+            "student.passportMimeType",
+        ])
+            .where("student.id = :id", { id })
+            .andWhere("student.isDeleted = false")
+            .getOne();
+    }
     async countBySchool(schoolId) {
         return await this.studentRepository.count({
             where: { schoolId, isDeleted: false, isActive: true },
         });
+    }
+    async findIdsBySchool(schoolId) {
+        const rows = await this.studentRepository
+            .createQueryBuilder("student")
+            .select(["student.id"])
+            .where("student.schoolId = :schoolId", { schoolId })
+            .andWhere("student.isDeleted = :isDeleted", { isDeleted: false })
+            .getMany();
+        return rows.map((r) => r.id);
     }
     async atomicUpdate(query, updateData) {
         await this.studentRepository.update(query, updateData);
